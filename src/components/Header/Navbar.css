@@ -2,15 +2,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 5rem;
+  padding-top: 0.7rem;
   position: sticky;
   top: 0;
-  background-color: var(--white);
-  z-index: 1000;
+  background-color: white;
+  z-index: 1;
 }
 
 .navbar-logo {
   height: 2rem;
+  padding-left: 5rem;
+}
+.navbar-items{
+  background-color: blue;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
 }
 
 .search-bar {
@@ -59,11 +66,12 @@
   justify-content: flex-end;
   align-items: center;
   gap: 0.25rem;
+  padding-right: 5rem;
 }
 
 .airbnb-your-home {
   padding: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 2rem;
   cursor: pointer;
   font-size: 0.9rem;
@@ -103,6 +111,12 @@
   .navbar {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+  .navbar-items{
+    display: none;
+  }
+  .navbar-logo{
+    display: none;
   }
 
   .profile-menu-flex {

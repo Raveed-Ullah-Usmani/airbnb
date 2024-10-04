@@ -4,9 +4,9 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import "./Header.css";
+import "./Navbar.css";
 
-const BasicMenu = () => {
+const ProfileButton = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -51,24 +51,8 @@ const BasicMenu = () => {
                 <MenuItem onClick={handleClose} className="menu-items">
                     Login
                 </MenuItem>
-                <div
-                    style={{
-                        height: "1px",
-                        backgroundColor: "var(--grey)",
-                        width: "100%",
-                    }}
-                />
-                <MenuItem onClick={handleClose} className="menu-items">
-                    Airbnb Your Home
-                </MenuItem>
-                <MenuItem onClick={handleClose} className="menu-items">
-                    Host an experience
-                </MenuItem>
-                <MenuItem onClick={handleClose} className="menu-items">
-                    Help
-                </MenuItem>
             </Menu>
         </div>
     );
 }
-export default BasicMenu;
+export default ProfileButton;

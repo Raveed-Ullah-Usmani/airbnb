@@ -1,14 +1,16 @@
 import logo from "/img/logo.svg";
-import "./Header.css";
+import "./Navbar.css";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import LanguageIcon from "@mui/icons-material/Language";
-import BasicMenu from "./BasicMenu";
-import BottomNav from "./BottomNav";
-import MobileSearchBar from "../MobileSearchBar/MobileSearchBar";
-const Header = () => {
+import ProfileButton from "./ProfileButton";
+const Navbar = () => {
     return (
         <div className="navbar">
             <img src={logo} alt="logo" className="navbar-logo" />
+            {/* <div className="navbar-items">
+                    <div>Stays</div>
+                    <div>Experiences</div>
+                </div> */}
             <div className="search-bar">
                 <div className="search-bar-text">Anywhere</div>
                 <div className="search-bar-text">Any Week</div>
@@ -23,13 +25,11 @@ const Header = () => {
                     <LanguageIcon sx={{ fontSize: "1.3rem" }} />
                 </div>
                 <div className="profile-div">
-                    <BasicMenu />
+                    <ProfileButton />
                 </div>
             </div>
-            <MobileSearchBar />
-            <BottomNav />
         </div>
     );
 }
 
-export default Header;
+export default Navbar;
