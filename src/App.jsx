@@ -1,5 +1,5 @@
 import Navbar from "./components/TestNavBar/Navbar"
-import Filter from "./components/Filter/Filter";
+import Categories from "./components/Categories/Categories";
 // import Navbar from "./components/Header/Navbar"
 function App() {
   const scrollableBodyStyle = {
@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <Filter />
+      <Categories />
       <div style={scrollableBodyStyle}>
         {Array.from({ length: 1000 }, (_, index) => (
           <p key={index}>This is item {index + 1}</p>
