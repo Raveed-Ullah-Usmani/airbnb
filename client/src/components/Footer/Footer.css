@@ -1,0 +1,107 @@
+/* General Footer Styling */
+.footer {
+  background-color: var(--white); /* Match the navbar background color */
+  padding: 1rem 3rem;
+  text-align: center;
+  border-top: 1px solid var(--grey); /* Consistent border with filter-div */
+  position: relative;
+  z-index: 1;
+}
+
+/* Footer Content Layout */
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Footer Links */
+.footer-links {
+  margin: auto;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 2rem; /* Replace fixed margin with gap */
+}
+
+.footer-links li {
+  margin: 0;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: var(--font-grey); /* Use consistent font color */
+  font-weight: 600; /* Match font-weight with navbar */
+  font-size: 0.85rem; /* Match search-bar text */
+}
+
+.footer-links a:hover {
+  color: var(--black); /* Match selected-label color */
+  transition: all 0.3s;
+}
+
+/* Social Icons */
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* Consistent spacing */
+}
+
+.footer-socials img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain; /* Consistent styling with links-img */
+}
+
+/* Footer Bottom Text */
+.footer-bottom {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.footer-bottom p {
+  font-size: 0.85rem; /* Match navbar text */
+  color: var(--font-grey); /* Use consistent font color */
+  margin: 5px 0; /* Add spacing for stacked view */
+}
+
+a {
+  text-decoration: none;
+  color: var(--font-grey); /* Use consistent font color */
+  font-weight: 600; /* Match font-weight with navbar */
+  font-size: 0.85rem; /* Match search-bar text */
+}
+a:hover {
+  text-decoration: none;
+  color: var(--font-grey); /* Use consistent font color */
+  font-weight: 600; /* Match font-weight with navbar */
+  font-size: 0.85rem; /* Match search-bar text */
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 800px) {
+  .footer {
+    padding: 0.5rem 1.5rem; /* Consistent padding with navbar */
+  }
+
+  .footer-content {
+    flex-direction: column; /* Stack elements vertically */
+    text-align: center;
+  }
+
+  .footer-links ul {
+    flex-direction: column; /* Stack links vertically */
+    align-items: center;
+    gap: 1rem; /* Adjust spacing for mobile */
+  }
+
+  .footer-bottom {
+    flex-direction: column; /* Stack bottom text */
+  }
+}

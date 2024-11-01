@@ -1,11 +1,11 @@
 /* Navbar Layout */
 .navbar {
-  background-color: transparent;
+  background-color: white;
   width: 100%;
   justify-content: space-between;
   align-items: center;
   /* padding-top: 0.7rem; */
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 1;
 }
@@ -20,25 +20,26 @@
   justify-content: space-between;
   padding-top: 0.7rem;
   align-items: center;
-  background-color: white;
-  transition: all 0.5s ease;
+  background-color: transparent;
+  transition: all 0.1s ease;
   height: auto;
 }
 
-.bottom-row,
-.bottom-row.scrolled {
+.bottom-row {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: white;
-  transition: all 0.5s ease;
+  transition: all 0.1s ease, background-color 0s ease;
   height: auto;
+  z-index: -10;
+  margin-bottom: 12px;
 }
 
-/* .bottom-row.scrolled {
+.bottom-row.scrolled {
   background-color: transparent;
-  transform: translateY(-145%);
-} */
+  transform: translateY(-115%);
+}
 
 .profile-container {
   display: flex;
@@ -132,7 +133,7 @@
 }
 
 .bottom-row.scrolled .elementA {
-  transform: translateY(-110%);
+  /* transform: translateY(-110%); */
 }
 
 .element2 {
@@ -143,5 +144,39 @@
 
 .element2,
 .elementA {
-  transition: all 0.5s ease;
+  transition: all 0.1s ease;
+}
+@media only screen and (max-width: 800px) {
+  .search-bar,
+  .element2,
+  .airbnb-your-home {
+    display: none;
+  }
+
+  .navbar {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .navbar-items {
+    display: none;
+  }
+  .navbar-logo {
+    display: none;
+  }
+
+  .profile-menu-flex {
+    position: fixed;
+    top: 0.5rem;
+    right: 1.5rem;
+  }
+
+  .bottom-nav {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-top: 1px solid var(--grey);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 5%);
+  }
 }
