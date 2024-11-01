@@ -5,6 +5,7 @@
   flex-wrap: wrap;
   padding: 1rem 3rem;
   z-index: -10000;
+  margin-top: 150px;
 }
 .card-box {
   margin: 1rem;
@@ -15,6 +16,7 @@
   height: 270px;
   width: 270px;
   overflow: hidden;
+  z-index: 1;
 }
 
 .card-img {

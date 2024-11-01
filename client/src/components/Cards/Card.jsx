@@ -1,4 +1,4 @@
-
+import React, { useState } from "react";
 import "./Card.css";
 import StarRateRoundedIcon from "@mui/icons-material/StarRateRounded";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,19 +9,22 @@ import { Pagination, Navigation } from "swiper/modules";
 
 const Card = (props) => {
     const { card } = props;
+    const [isHovered, setIsHovered] = useState(false);
+
     return (
-        <div className="card-box">
-            <Swiper style={{ zIndex: "-1" }}
+        <div
+            className="card-box"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <Swiper
                 slidesPerView={1}
                 spaceBetween={15}
                 loop={true}
-                mousewheel={true}
-                cssMode={true}
-                // pagination={{ clickable: true }}  // Making pagination clickable
-                pagination
+                pagination={isHovered ? { clickable: true } : false}
                 modules={[Pagination, Navigation]}
                 className="swiper-container"
-                simulateTouch={true}  // Ensures touch gestures are enabled
+                simulateTouch={true}
             >
                 {card.imgSrc.map((src, i) => (
                     <SwiperSlide key={i}>
@@ -38,11 +41,11 @@ const Card = (props) => {
             </div>
             <p style={{ margin: 0, color: "var(--font-grey)" }}>{card.desc}</p>
             <p style={{ margin: 0, color: "var(--font-grey)" }}>{card.date}</p>
-            <p style={{ margin: "0.2rem", fontSize: "1rem", color: "var(--black" }}>
+            <p style={{ margin: "0.2rem", fontSize: "1rem", color: "var(--black)" }}>
                 <span style={{ fontWeight: "600" }}>${card.price}</span> night
             </p>
-        </div >
+        </div>
     );
-}
+};
 
 export default Card;

@@ -7,12 +7,13 @@
   /* padding-top: 0.7rem; */
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 20;
 }
 
 .navbar-logo {
   height: 2rem;
   padding-left: 5rem;
+  z-index: 21;
 }
 
 .top-row {
@@ -47,6 +48,7 @@
   align-items: center;
   gap: 0.25rem;
   padding-right: 5rem;
+  z-index: 21;
 }
 
 .search-bar {

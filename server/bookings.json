@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1734686705003,
+    "propertyId": 1,
+    "customerName": "John Doe",
+    "checkInDate": "2024-12-20",
+    "checkOutDate": "2024-12-25",
+    "status": "Booked"
+  }
+]

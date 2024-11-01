@@ -1,19 +1,15 @@
-import { list, list2 } from "./cards-list";
-import Cards from "./components/Cards/Cards";
-import Navbar from "./components/TestNavBar/Navbar";
-import Categories from "./components/Categories/Categories";
-import Footer from "./components/Footer/Footer"
-import { useState } from "react";
+import Homepage from "./pages/HomePage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function App() {
-  const [selectedFilter, setSelectedFilter] = useState(0);
+
+
+const App = () => {
   return (
-    <>
-      <Navbar />
-      <Categories selectedFilter={selectedFilter} setSelectedFilter={setSelectedFilter} />
-      {selectedFilter == 0 ? <Cards list={list} /> : <Cards list={list2} />}
-      <Footer />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+      </Routes>
+    </Router>
   );
 }
 
