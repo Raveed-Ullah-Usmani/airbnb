@@ -1,9 +1,8 @@
-/* General Footer Styling */
 .footer {
-  background-color: var(--white); /* Match the navbar background color */
+  background-color: var(--white);
   padding: 1rem 3rem;
   text-align: center;
-  border-top: 1px solid var(--grey); /* Consistent border with filter-div */
+  border-top: 1px solid var(--grey);
   position: relative;
   z-index: 1;
 }
