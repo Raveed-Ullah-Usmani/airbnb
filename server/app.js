@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import fs from "fs";
 import path from "path";
-import { list2, list } from "../client/src/cards-list.js";
+import { list, list2 } from "../client/src/cards-list.js";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -14,12 +14,12 @@ const PORT = 3000;
 
 const bookingsFilePath = path.join(__dirname, 'bookings.json');
 
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 // Fetch all listings
 app.get("/api/listings", (req, res) => {
-  res.json(list2);
+  res.json(list);
 });
 
 // Search listings based on query
@@ -30,7 +30,7 @@ app.get("/api/listings/search", (req, res) => {
     return res.status(400).json({ error: "Query parameter is required" });
   }
 
-  const filteredListings = list2.filter(
+  const filteredListings = list.filter(
     (item) =>
       item.title.toLowerCase().includes(query.toLowerCase()) ||
       item.desc.toLowerCase().includes(query.toLowerCase())
@@ -50,7 +50,7 @@ app.get("/api/listings/search", (req, res) => {
 // Fetch a single listing by ID
 app.get("/api/listings/:id", (req, res) => {
   const { id } = req.params;
-  const listing = list2.find((item) => item.id === parseInt(id));
+  const listing = list.find((item) => item.id === parseInt(id));
 
   if (!listing) {
     return res.status(404).json({ error: "Listing not found" });
@@ -88,7 +88,7 @@ app.post("/api/bookings", (req, res) => {
     return res.status(400).json({ error: "All fields (propertyId, customerName, checkInDate, checkOutDate) are required" });
   }
 
-  const property = list2.find(item => item.id === parseInt(propertyId));
+  const property = list.find(item => item.id === parseInt(propertyId));
   if (!property) {
     return res.status(404).json({ error: "Property not found" });
   }
