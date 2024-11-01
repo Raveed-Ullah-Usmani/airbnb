@@ -1,0 +1,31 @@
+.error-page {
+  text-align: center;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  color: var(--font-grey);
+}
+
+.error-page h1 {
+  font-size: 3rem;
+  color: var(--black);
+}
+
+.error-page p {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+.go-home-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: white;
+  background-color: var(--theme);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.go-home-btn:hover {
+  background-color: var(--theme-hover);
+}

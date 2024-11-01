@@ -112,6 +112,7 @@
 }
 
 .profile-menu-flex {
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -163,7 +164,9 @@
     display: none;
   }
   .navbar-logo {
-    display: none;
+    /* display: none; */
+    /* padding-right: 100px; */
+    padding-left: 0rem;
   }
 
   .profile-menu-flex {

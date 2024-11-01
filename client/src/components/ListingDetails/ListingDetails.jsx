@@ -37,7 +37,7 @@ const ListingDetails = ({ id }) => {
 
     // Function to handle the "Book Now" button click
     const handleBookNow = () => {
-        navigate('/booking'); // Navigate to the booking page (assuming the path is '/booking')
+        navigate(`/booking/${id}`); // Navigate to the booking page (assuming the path is '/booking')
     };
     return (
         <div className="listing-detail-page">

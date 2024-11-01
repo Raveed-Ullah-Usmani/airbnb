@@ -56,3 +56,39 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
   transition: box-shadow 0.3s ease;
 }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .listing-details-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .listing-info h1 {
+    font-size: 1.8rem;
+  }
+
+  .listing-info p {
+    font-size: 1rem;
+  }
+
+  .book-now-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .listing-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .listing-info p {
+    font-size: 0.9rem;
+  }
+
+  .book-now-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
