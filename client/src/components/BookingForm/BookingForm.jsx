@@ -28,7 +28,7 @@ const BookingForm = ({ property }) => {
         setError("");
         const customerName = "John Doe"; // Replace with actual customer name input
         const days = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-        const totalPrice = property.pricePerNight * days;
+        const totalPrice = (Number(property.pricePerNight) * days).toString();
 
         // Prepare booking data
         const bookingData = {
