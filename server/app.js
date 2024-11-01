@@ -82,9 +82,9 @@ const writeBookings = (bookings) => {
 // Create a new booking
 app.post("/api/bookings", (req, res) => {
 
-  const { propertyId, customerName, checkInDate, checkOutDate } = req.body;
+  const { propertyId, customerName, checkInDate, checkOutDate, totalPrice } = req.body;
 
-  if (!propertyId || !customerName || !checkInDate || !checkOutDate) {
+  if (!propertyId || !customerName || !checkInDate || !checkOutDate || !totalPrice) {
     return res.status(400).json({ error: "All fields (propertyId, customerName, checkInDate, checkOutDate) are required" });
   }
 
@@ -100,6 +100,7 @@ app.post("/api/bookings", (req, res) => {
     checkInDate,
     checkOutDate,
     status: "Booked",
+    totalPrice,
   };
 
   const bookings = readBookings();
