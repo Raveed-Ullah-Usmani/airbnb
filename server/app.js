@@ -3,8 +3,13 @@ import cors from "cors";
 import fs from "fs";
 import path from "path";
 import { list, list2 } from "../client/src/cards-list.js";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import mongoose from "mongoose";
+import Booking from "./models/Booking.js";
+import Property from "./models/Property.js";
+
+const mongoURI = "mongodb://localhost:27017/airbnbDB";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,14 +17,23 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = 3000;
 
-const bookingsFilePath = path.join(__dirname, 'bookings.json');
+const bookingsFilePath = path.join(__dirname, "bookings.json");
 
 app.use(cors());
 app.use(express.json());
 
+mongoose
+  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+  });
+
 // Fetch all listings
 app.get("/api/listings", (req, res) => {
-  res.json(list);
+  res.json(list2);
 });
 
 // Search listings based on query
@@ -30,7 +44,7 @@ app.get("/api/listings/search", (req, res) => {
     return res.status(400).json({ error: "Query parameter is required" });
   }
 
-  const filteredListings = list.filter(
+  const filteredListings = list2.filter(
     (item) =>
       item.title.toLowerCase().includes(query.toLowerCase()) ||
       item.desc.toLowerCase().includes(query.toLowerCase())
@@ -50,7 +64,7 @@ app.get("/api/listings/search", (req, res) => {
 // Fetch a single listing by ID
 app.get("/api/listings/:id", (req, res) => {
   const { id } = req.params;
-  const listing = list.find((item) => item.id === parseInt(id));
+  const listing = list2.find((item) => item.id === parseInt(id));
 
   if (!listing) {
     return res.status(404).json({ error: "Listing not found" });
@@ -115,4 +129,3 @@ app.post("/api/bookings", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-
