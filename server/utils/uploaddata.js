@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Property from './models/Property.js';  // Import the Property model
+import Property from '../models/Property.js';  // Import the Property model
 
 const mongoURI = 'mongodb://localhost:27017/airbnbDB';
 

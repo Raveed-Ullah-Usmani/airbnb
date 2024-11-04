@@ -5,7 +5,7 @@ import "./LoginPage.css";
 import { useUserContext } from '../context/UserContext';
 
 const LoginPage = () => {
-    const { login } = useUserContext();
+    const { login, token, setToken } = useUserContext();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -27,7 +27,8 @@ const LoginPage = () => {
 
             if (response.data.token) {
                 // Store token in localStorage or context as required
-                localStorage.setItem("token", response.data.token);
+                // localStorage.setItem("token", response.data.token);
+                await setToken(response.data.token);
                 login({ email }); // Set the user context
                 navigate("/");  // Redirect to the home page after successful login
             } else {

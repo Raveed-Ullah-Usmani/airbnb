@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import Booking from "./models/Booking.js";
 import Property from "./models/Property.js";
 import User from "./models/User.js";
+import { authenticateToken, authorizeRole } from './middleware/authMiddleware.js';
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -140,7 +141,7 @@ app.post("/api/auth/register", async (req, res) => {
     await newUser.save();
 
     // Generate JWT token
-    const token = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
+    const token = jwt.sign({ userId: newUser._id, role: newUser.role }, JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -175,9 +176,23 @@ app.post("/api/auth/login", async (req, res) => {
   }
 });
 
+// Role Authentication
+app.get("/api/auth/role", authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    res.json({ role: user.role });
+  } catch (error) {
+    console.error("Error fetching user role:", error);
+    res.status(500).json({ error: "Server error." });
+  }
+});
+
 // Admin routes
 // Fetch all listings (admin view)
-app.get("/api/admin/listings", async (req, res) => {
+app.get("/api/admin/listings", authenticateToken, authorizeRole('admin'), async (req, res) => {
   try {
     const listings = await Property.find();
     res.json(listings);
@@ -188,7 +203,7 @@ app.get("/api/admin/listings", async (req, res) => {
 });
 
 // Add a new listing
-app.post("/api/admin/listings", async (req, res) => {
+app.post("/api/admin/listings", authenticateToken, authorizeRole('admin'), async (req, res) => {
   const {
     type,
     rating,
@@ -245,7 +260,7 @@ app.post("/api/admin/listings", async (req, res) => {
 });
 
 // Delete a listing by ID
-app.delete("/api/admin/listings/:id", async (req, res) => {
+app.delete("/api/admin/listings/:id", authenticateToken, authorizeRole('admin'), async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -261,7 +276,7 @@ app.delete("/api/admin/listings/:id", async (req, res) => {
 });
 
 // View all bookings (admin overview)
-app.get("/api/admin/bookings", async (req, res) => {
+app.get("/api/admin/bookings", authenticateToken, authorizeRole('admin'), async (req, res) => {
   try {
     const bookings = await Booking.find();
     res.json(bookings);

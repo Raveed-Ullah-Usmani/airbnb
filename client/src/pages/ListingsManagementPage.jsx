@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ListingsManagementPage.css';
+import { useUserContext } from '../context/UserContext';
 
 const ListingsManagementPage = () => {
+    const { token } = useUserContext();
     const [listings, setListings] = useState([]);
     const [newListing, setNewListing] = useState({
         type: '',
@@ -28,7 +30,12 @@ const ListingsManagementPage = () => {
 
     const fetchListings = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/api/admin/listings');
+            // console.log(token);
+            const response = await axios.get('http://localhost:3000/api/admin/listings', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setListings(response.data);
         } catch (error) {
             console.error('Error fetching listings:', error);
@@ -48,7 +55,11 @@ const ListingsManagementPage = () => {
     const handleAddListing = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3000/api/admin/listings', newListing);
+            await axios.post('http://localhost:3000/api/admin/listings', newListing, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             fetchListings();
             setNewListing({
                 type: '',
@@ -71,7 +82,11 @@ const ListingsManagementPage = () => {
 
     const handleDeleteListing = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/api/admin/listings/${id}`);
+            await axios.delete(`http://localhost:3000/api/admin/listings/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             fetchListings();
         } catch (error) {
             console.error('Error deleting listing:', error);

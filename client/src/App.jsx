@@ -1,6 +1,7 @@
 import BookingPage from "./pages/BookingPage";
 import ErrorPage from "./pages/ErrorPage";
 import Homepage from "./pages/HomePage";
+import ProtectedRoute from './routes/ProtectedRoute';
 import ListingDetailPage from "./pages/ListingDetailPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
@@ -21,13 +22,15 @@ const App = () => {
         <Route path="/listings/:id" element={<ListingDetailPage />} />
         <Route path="/booking/:id" element={<BookingPage />} />
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/admin" element={<AdminPage />}>
-          <Route index element={<ListingsManagementPage />} /> {/* Default page */}
-          <Route path="listings" element={<ListingsManagementPage />} />
-          <Route path="bookings" element={<BookingsManagementPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin" element={<AdminPage />}>
+            <Route index element={<ListingsManagementPage />} /> {/* Default page */}
+            <Route path="listings" element={<ListingsManagementPage />} />
+            <Route path="bookings" element={<BookingsManagementPage />} />
+          </Route>
         </Route>
       </Routes>
-    </Router>
+    </Router >
   );
 }
 
