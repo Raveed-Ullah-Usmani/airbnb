@@ -63,7 +63,7 @@ const Card = (props) => {
             <p style={{ margin: "0.2rem", fontSize: "1rem", color: "var(--black)" }}>
                 <span style={{ fontWeight: "600" }}>${card.pricePerNight}</span> night
             </p>
-        </div>
+        </div >
     );
 };
 

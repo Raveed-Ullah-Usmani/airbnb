@@ -40,7 +40,7 @@ const HomePage = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar showSearchBar={true} />
             <Categories selectedFilter={selectedFilter} setSelectedFilter={setSelectedFilter} />
             {/* Render Cards with list fetched from API */}
             {selectedFilter === 0 ? <Cards list={list} /> : <Cards list={list2} />}

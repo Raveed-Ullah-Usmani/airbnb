@@ -1,0 +1,85 @@
+/* ListingsManagementPage.css */
+
+.listings-management {
+  padding: 20px;
+}
+
+.listings-management h2 {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.listings-management form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.listings-management form input {
+  flex: 1 1 200px;
+  padding: 10px;
+  border: 1px solid var(--black);
+  border-radius: 5px;
+}
+
+.listings-management form button {
+  padding: 10px 20px;
+  background-color: var(--theme);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.listings-management .listings-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.listings-management .listing-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: var(--white);
+  border: 1px solid var(--light-grey);
+  border-radius: 8px;
+  overflow: hidden;
+  width: 300px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.listings-management .listing-card:hover {
+  transform: scale(1.05);
+}
+
+.listings-management .listing-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.listings-management .listing-info {
+  padding: 10px;
+}
+
+.listings-management .listing-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.listings-management .listing-info p {
+  margin: 5px 0;
+}
+
+.listings-management button {
+  padding: 5px 10px;
+  background-color: var(--theme);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

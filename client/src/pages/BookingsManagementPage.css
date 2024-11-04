@@ -1,0 +1,39 @@
+/* BookingsManagementPage.css */
+
+.bookings-management {
+  padding: 20px;
+}
+
+.bookings-management h2 {
+  font-size: 2rem;
+  color: var(--theme);
+  margin-bottom: 20px;
+}
+
+.bookings-management .bookings-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.bookings-management .booking-card {
+  background-color: var(--white);
+  border: 1px solid var(--light-grey);
+  border-radius: 8px;
+  border-color: var(--black);
+  padding: 20px;
+  width: 250px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.bookings-management .booking-card h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.bookings-management .booking-card p,
+a {
+  margin: 5px 0;
+  color: var(--dark-grey);
+}

@@ -10,6 +10,8 @@
 .card-box {
   margin: 1rem;
   margin-bottom: 2rem;
+  width: 270px;
+  height: 406px;
 }
 
 .swiper-container {
