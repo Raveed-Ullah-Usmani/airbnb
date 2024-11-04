@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 
 const bookingSchema = new mongoose.Schema({
   propertyId: {
-    type: Number, // Ensure this is a Number, not an ObjectId
+    type: String, // Ensure this is a Number, not an ObjectId
     required: true,
   },
-  customerName: {
+  customerEmail: {
     type: String,
     required: true,
   },

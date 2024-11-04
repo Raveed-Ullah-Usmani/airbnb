@@ -37,14 +37,14 @@ const BookingForm = ({ property }) => {
         }
 
         setError("");
-        const customerName = user.name || "John Doe"; // Use user's name or a default
+        const customerEmail = user.email || "John Doe"; // Use user's name or a default
         const days = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
         const totalPrice = (Number(property.pricePerNight) * days).toString();
 
         // Prepare booking data
         const bookingData = {
-            propertyId: property.id,
-            customerName,
+            propertyId: property._id,
+            customerEmail,
             checkInDate,
             checkOutDate,
             totalPrice,

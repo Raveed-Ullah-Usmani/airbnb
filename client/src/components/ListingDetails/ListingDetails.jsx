@@ -53,8 +53,8 @@ const ListingDetails = ({ id }) => {
                     <p><strong>Description:</strong> {listing.desc}</p>
                     <p><strong>Amenities:</strong> {listing.amenities.join(', ')}</p>
                     <p><strong>Guests:</strong> {listing.guests}</p>
-                    <p><strong>Bedrooms:</strong> {listing.bedrooms}</p>
-                    <p><strong>Bathrooms:</strong> {listing.bathrooms}</p>
+                    {/* <p><strong>Bedrooms:</strong> {listing.bedrooms}</p> */}
+                    {/* <p><strong>Bathrooms:</strong> {listing.bathrooms}</p> */}
                     <p><strong>Price per night:</strong> ${listing.pricePerNight}</p>
 
                     <button onClick={handleBookNow} className="book-now-btn">

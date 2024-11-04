@@ -65,7 +65,7 @@ const LoginPage = () => {
                 {errorMessage && <p className="error">{errorMessage}</p>}
 
                 <button type="submit" className="login-btn">Login</button>
-                <p className="register-link">Don't have an account? <a href="/register">Register</a></p>
+                <p className="register-link">Don't have an account? <a href="/signup">Sign up</a></p>
             </form>
         </div>
     );

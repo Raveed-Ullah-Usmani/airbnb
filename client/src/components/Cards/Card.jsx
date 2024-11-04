@@ -19,10 +19,10 @@ const Card = (props) => {
     const handleCardClick = async () => {
         try {
             // Send a request to the backend with the card ID
-            const response = await axios.get(`http://localhost:3000/api/listings/${card.id}`);
+            const response = await axios.get(`http://localhost:3000/api/listings/${card._id}`);
             if (response.data) {
                 // If the response is successful, navigate to the listing details page
-                navigate(`/listings/${card.id}`);
+                navigate(`/listings/${card._id}`);
             }
         } catch (error) {
             console.error("Error fetching listing details:", error);

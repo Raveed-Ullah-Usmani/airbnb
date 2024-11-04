@@ -26,7 +26,6 @@ mongoose
   .catch((error) => console.error("MongoDB connection error:", error));
 
 // Routes
-
 // Fetch all listings
 app.get("/api/listings", async (req, res) => {
   try {
@@ -65,25 +64,31 @@ app.get("/api/listings/search", async (req, res) => {
 // Fetch a single listing by ID
 app.get("/api/listings/:id", async (req, res) => {
   const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid listing ID" });
+  }
+
   try {
-    const property = await Property.findOne({ id: id });
+    const property = await Property.findById(id);
     if (!property) {
       return res.status(404).json({ error: "Listing not found" });
     }
     res.json(property);
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: "Error fetching listing" });
   }
 });
 
 // Create a new booking
 app.post("/api/bookings", async (req, res) => {
-  const { propertyId, customerName, checkInDate, checkOutDate, totalPrice } =
+  const { propertyId, customerEmail, checkInDate, checkOutDate, totalPrice } =
     req.body;
 
   if (
     !propertyId ||
-    !customerName ||
+    !customerEmail ||
     !checkInDate ||
     !checkOutDate ||
     !totalPrice
@@ -91,15 +96,19 @@ app.post("/api/bookings", async (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
   }
 
+  if (!mongoose.Types.ObjectId.isValid(propertyId)) {
+    return res.status(400).json({ error: "Invalid listing ID" });
+  }
+
   try {
-    const property = await Property.findOne({id: propertyId});
+    const property = await Property.findById(propertyId);
     if (!property) {
       return res.status(404).json({ error: "Property not found" });
     }
 
     const newBooking = new Booking({
       propertyId,
-      customerName,
+      customerEmail,
       checkInDate,
       checkOutDate,
       totalPrice,
@@ -142,7 +151,6 @@ app.post("/api/auth/register", async (req, res) => {
   }
 });
 
-
 // User login
 app.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body;
@@ -164,6 +172,102 @@ app.post("/api/auth/login", async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: "Error logging in" });
+  }
+});
+
+// Admin routes
+// Fetch all listings (admin view)
+app.get("/api/admin/listings", async (req, res) => {
+  try {
+    const listings = await Property.find();
+    res.json(listings);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Error fetching listings" });
+  }
+});
+
+// Add a new listing
+app.post("/api/admin/listings", async (req, res) => {
+  const {
+    type,
+    rating,
+    desc,
+    imgSrc,
+    pricePerNight,
+    date,
+    title,
+    address,
+    agent,
+    contact,
+    amenities,
+    guests
+  } = req.body;
+
+  if (
+    !type ||
+    !rating ||
+    !desc ||
+    !imgSrc ||
+    !pricePerNight ||
+    !date ||
+    !title ||
+    !address ||
+    !agent ||
+    !contact ||
+    !amenities ||
+    !guests
+  ) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  try {
+    const newListing = new Property({
+      type,
+      rating,
+      desc,
+      imgSrc,
+      pricePerNight,
+      date,
+      title,
+      address,
+      agent,
+      contact,
+      amenities,
+      guests
+    });
+    await newListing.save();
+    res.status(201).json({ message: "Listing added successfully", listing: newListing });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Error adding listing" });
+  }
+});
+
+// Delete a listing by ID
+app.delete("/api/admin/listings/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedListing = await Property.findByIdAndDelete(id);
+    if (!deletedListing) {
+      return res.status(404).json({ error: "Listing not found" });
+    }
+    res.json({ message: "Listing deleted successfully" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Error deleting listing" });
+  }
+});
+
+// View all bookings (admin overview)
+app.get("/api/admin/bookings", async (req, res) => {
+  try {
+    const bookings = await Booking.find();
+    res.json(bookings);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Error fetching bookings" });
   }
 });
 

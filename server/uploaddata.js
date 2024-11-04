@@ -6,7 +6,6 @@ const mongoURI = 'mongodb://localhost:27017/airbnbDB';
 // Property data (list2)
 const list2 = [
   {
-    id: 1,
     type: "House",
     rating: "4.5",
     desc: "Beautiful 3-bedroom house with a spacious backyard and modern amenities. Ideal for family living.",
@@ -23,11 +22,8 @@ const list2 = [
     contact: "555-1234-5678",
     amenities: ["3 Bedrooms", "2 Bathrooms", "Backyard", "Garage", "Swimming Pool"],
     guests: "6",
-    bedrooms: "3",
-    bathrooms: "2",
   },
   {
-    id: 2,
     type: "Apartment",
     rating: "4.8",
     desc: "Luxury apartment with a panoramic view of the city skyline. High-end finishes and top-tier appliances.",
@@ -44,11 +40,8 @@ const list2 = [
     contact: "555-9876-5432",
     amenities: ["2 Bedrooms", "2.5 Bathrooms", "Balcony", "High-End Kitchen", "Gym Access"],
     guests: "4",
-    bedrooms: "2",
-    bathrooms: "2.5",
   },
   {
-    id: 3,
     type: "Cottage",
     rating: "3.9",
     desc: "Charming 2-bedroom cottage with a rustic feel. Perfect for those who enjoy peaceful countryside living.",
@@ -65,11 +58,8 @@ const list2 = [
     contact: "555-2345-6789",
     amenities: ["2 Bedrooms", "1 Bathroom", "Garden", "Fireplace"],
     guests: "4",
-    bedrooms: "2",
-    bathrooms: "1",
   },
   {
-    id: 4,
     type: "Townhouse",
     rating: "4.3",
     desc: "Spacious townhouse with a modern design, located close to shopping and public transportation. A perfect city home.",
@@ -86,8 +76,6 @@ const list2 = [
     contact: "555-8765-4321",
     amenities: ["3 Bedrooms", "2 Bathrooms", "2-Car Garage", "Modern Kitchen"],
     guests: "6",
-    bedrooms: "3",
-    bathrooms: "2",
   },
 ];
 

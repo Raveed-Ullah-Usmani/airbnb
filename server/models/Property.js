@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
 const propertySchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   type: {
     type: String,
     required: true,
@@ -50,14 +46,6 @@ const propertySchema = new mongoose.Schema({
     required: true,
   }],
   guests: {
-    type: String,
-    required: true,
-  },
-  bedrooms: {
-    type: String,
-    required: true,
-  },
-  bathrooms: {
     type: String,
     required: true,
   },
