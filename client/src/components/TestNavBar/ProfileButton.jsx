@@ -65,7 +65,10 @@ const ProfileButton = () => {
                 }}
             >
                 {user ? (
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    [
+                        <MenuItem key="logout" onClick={handleLogout}>Logout</MenuItem>,
+                        <MenuItem key="profile" onClick={() => navigate("/profile")}>Profile</MenuItem>
+                    ]
                 ) : (
                     [
                         <MenuItem key="login" onClick={handleLogin}>Login</MenuItem>,

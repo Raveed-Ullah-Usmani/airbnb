@@ -4,6 +4,7 @@ import axios from "axios";
 import PropertySummary from "../components/PropertySymmary/PropertySummary";
 import BookingForm from "../components/BookingForm/BookingForm";
 import "./BookingPage.css";
+import Navbar from "../components/TestNavBar/Navbar.jsx"
 
 const BookingPage = () => {
     const { id } = useParams(); // Extract the property ID from the route
@@ -35,10 +36,13 @@ const BookingPage = () => {
     }
 
     return (
-        <div className="booking-page">
-            <PropertySummary property={property} />
-            <BookingForm property={property} />
-        </div>
+        <>
+            <Navbar />
+            <div className="booking-page">
+                <PropertySummary property={property} />
+                <BookingForm property={property} />
+            </div>
+        </>
     );
 };
 

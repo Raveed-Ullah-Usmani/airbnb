@@ -123,6 +123,41 @@ app.post("/api/bookings", async (req, res) => {
   }
 });
 
+// Fetch bookings made by the user
+app.get('/api/bookings', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    //get email of the user with userId
+    const user  = await User.findOne({_id: userId});
+    const email = user.email;
+    const bookings = await Booking.find({ customerEmail: email });
+    res.json(bookings);
+  } catch (error) {
+    console.error('Error fetching bookings:', error);
+    res.status(500).json({ error: 'Server error.' });
+  }
+});
+
+// Fetch user profile information
+app.get('/api/profile', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const userProfile = {
+      username: user.username,
+      email: user.email,
+      profilePictureUrl: user.profilePictureUrl
+    };
+    res.json(userProfile);
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ error: 'Server error.' });
+  }
+});
+
 // Register a new user
 app.post("/api/auth/register", async (req, res) => {
   const { username, email, password } = req.body;
@@ -218,7 +253,6 @@ app.post("/api/admin/listings", authenticateToken, authorizeRole('admin'), async
     amenities,
     guests
   } = req.body;
-
   if (
     !type ||
     !rating ||

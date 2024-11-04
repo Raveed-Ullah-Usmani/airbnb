@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './ListingsManagementPage.css';
 import { useUserContext } from '../context/UserContext';
+import axios from '../utils/axiosConfig.js'
 
 const ListingsManagementPage = () => {
     const { token } = useUserContext();
     const [listings, setListings] = useState([]);
     const [newListing, setNewListing] = useState({
         type: '',
-        rating: '',
+        rating: '0',
         desc: '',
         imgSrc: [],
         pricePerNight: '',
@@ -30,12 +30,7 @@ const ListingsManagementPage = () => {
 
     const fetchListings = async () => {
         try {
-            // console.log(token);
-            const response = await axios.get('http://localhost:3000/api/admin/listings', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            const response = await axios.get('/admin/listings');
             setListings(response.data);
         } catch (error) {
             console.error('Error fetching listings:', error);
@@ -55,15 +50,12 @@ const ListingsManagementPage = () => {
     const handleAddListing = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3000/api/admin/listings', newListing, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            setNewListing({ ...newListing });
+            await axios.post('/admin/listings', newListing);
             fetchListings();
             setNewListing({
                 type: '',
-                rating: '',
+                rating: '0',
                 desc: '',
                 imgSrc: [],
                 pricePerNight: '',
@@ -82,11 +74,7 @@ const ListingsManagementPage = () => {
 
     const handleDeleteListing = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/api/admin/listings/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            await axios.delete(`http://localhost:3000/api/admin/listings/${id}`);
             fetchListings();
         } catch (error) {
             console.error('Error deleting listing:', error);
@@ -100,18 +88,18 @@ const ListingsManagementPage = () => {
     return (
         <div className="listings-management">
             <form onSubmit={handleAddListing}>
+                <input type="text" name="title" value={newListing.title} onChange={handleInputChange} placeholder="Title" required />
                 <input type="text" name="type" value={newListing.type} onChange={handleInputChange} placeholder="Type" required />
-                <input type="text" name="rating" value={newListing.rating} onChange={handleInputChange} placeholder="Rating" required />
                 <input type="text" name="desc" value={newListing.desc} onChange={handleInputChange} placeholder="Description" required />
-                <input type="text" name="imgSrc" value={newListing.imgSrc.join(', ')} onChange={(e) => handleArrayInputChange(e, 'imgSrc')} placeholder="Image URLs (comma separated)" required />
+                {/* <input type="text" name="rating" value={newListing.rating} onChange={handleInputChange} placeholder="Rating" required /> */}
                 <input type="text" name="pricePerNight" value={newListing.pricePerNight} onChange={handleInputChange} placeholder="Price per Night" required />
                 <input type="text" name="date" value={newListing.date} onChange={handleInputChange} placeholder="Date" required />
-                <input type="text" name="title" value={newListing.title} onChange={handleInputChange} placeholder="Title" required />
                 <input type="text" name="address" value={newListing.address} onChange={handleInputChange} placeholder="Address" required />
-                <input type="text" name="agent" value={newListing.agent} onChange={handleInputChange} placeholder="Agent" required />
+                <input type="text" name="agent" value={newListing.agent} onChange={handleInputChange} placeholder="Host" required />
                 <input type="text" name="contact" value={newListing.contact} onChange={handleInputChange} placeholder="Contact" required />
                 <input type="text" name="amenities" value={newListing.amenities.join(', ')} onChange={(e) => handleArrayInputChange(e, 'amenities')} placeholder="Amenities (comma separated)" required />
                 <input type="text" name="guests" value={newListing.guests} onChange={handleInputChange} placeholder="Guests" required />
+                <input type="text" name="imgSrc" value={newListing.imgSrc.join(', ')} onChange={(e) => handleArrayInputChange(e, 'imgSrc')} placeholder="Image URLs (comma separated)" required />
                 <button type="submit">Add Listing</button>
             </form>
             <div className="listings-grid">

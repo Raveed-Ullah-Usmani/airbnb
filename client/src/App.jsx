@@ -9,6 +9,7 @@ import RegisterPage from "./pages/RegisterPage";
 import ListingsManagementPage from "./pages/ListingsManagementPage";
 import BookingsManagementPage from "./pages/BookingsManagementPage";
 import AdminPage from "./pages/AdminPage";
+import UserProfilePage from "./pages/UserProfilePage";
 
 
 
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="listings" element={<ListingsManagementPage />} />
             <Route path="bookings" element={<BookingsManagementPage />} />
           </Route>
+          <Route path="/profile" element={<UserProfilePage />} />
         </Route>
       </Routes>
     </Router >
