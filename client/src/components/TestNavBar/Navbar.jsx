@@ -4,6 +4,7 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import LanguageIcon from "@mui/icons-material/Language";
 import './Navbar.css';
 import ProfileButton from "./ProfileButton";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -25,7 +26,9 @@ const Navbar = () => {
         <div className="navbar">
             <div className={`top-row ${scrolled ? 'scrolled' : ''}`}>
                 {/* <div className="element element1">Element 1</div> */}
-                <img src={logo} className="navbar-logo"></img>
+                <Link to="/">
+                    <img src={logo} className="navbar-logo" alt="Logo" />
+                </Link>
                 <div className="element element2">
                     <div>Stays</div>
                     <div>Experiences</div>

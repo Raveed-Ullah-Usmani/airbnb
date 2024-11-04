@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate to redirect
+import { useUserContext } from "../../context/UserContext"; // Assuming you have a user context
 import "./BookingForm.css";
 
 const BookingForm = ({ property }) => {
@@ -8,10 +10,19 @@ const BookingForm = ({ property }) => {
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
 
+    const { user } = useUserContext(); // Get user info from context
+    const navigate = useNavigate(); // Initialize navigate
+
     const handleBooking = async (e) => {
         e.preventDefault();
 
-        // Validation
+        // Check if the user is logged in
+        if (!user) {
+            navigate("/login"); // Redirect to login page if not logged in
+            return;
+        }
+
+        // Validation for dates
         if (!checkInDate || !checkOutDate) {
             setError("Please select both check-in and check-out dates.");
             return;
@@ -26,7 +37,7 @@ const BookingForm = ({ property }) => {
         }
 
         setError("");
-        const customerName = "John Doe"; // Replace with actual customer name input
+        const customerName = user.name || "John Doe"; // Use user's name or a default
         const days = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
         const totalPrice = (Number(property.pricePerNight) * days).toString();
 
@@ -51,7 +62,6 @@ const BookingForm = ({ property }) => {
             setError("An error occurred while making the booking. Please try again.");
         }
     };
-
 
     return (
         <form className="booking-form" onSubmit={handleBooking}>
