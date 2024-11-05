@@ -29,8 +29,8 @@ const App = () => {
             <Route path="listings" element={<ListingsManagementPage />} />
             <Route path="bookings" element={<BookingsManagementPage />} />
           </Route>
-          <Route path="/profile" element={<UserProfilePage />} />
         </Route>
+        <Route path="/profile" element={<UserProfilePage />} />
       </Routes>
     </Router >
   );

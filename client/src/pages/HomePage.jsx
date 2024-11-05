@@ -4,6 +4,7 @@ import Navbar from "../components/TestNavBar/Navbar";
 import Categories from "../components/Categories/Categories";
 import Footer from "../components/Footer/Footer";
 import { list2 } from "../cards-list";
+import axiosInstance from "../utils/axiosConfig.js"
 
 const HomePage = () => {
     const [selectedFilter, setSelectedFilter] = useState(0);
@@ -13,15 +14,9 @@ const HomePage = () => {
 
     useEffect(() => {
         // Fetch list from API
-        fetch("http://localhost:3000/api/listings")
+        axiosInstance.get("/listings")
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to fetch list");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setList(data);  // Update list state with fetched data
+                setList(response.data);  // Update list state with fetched data
                 setLoading(false);  // Set loading to false once data is fetched
             })
             .catch((err) => {
@@ -40,7 +35,7 @@ const HomePage = () => {
 
     return (
         <>
-            <Navbar showSearchBar={true} />
+            <Navbar showSearchBar={true} list={list} setList={setList} />
             <Categories selectedFilter={selectedFilter} setSelectedFilter={setSelectedFilter} />
             {/* Render Cards with list fetched from API */}
             {selectedFilter === 0 ? <Cards list={list} /> : <Cards list={list2} />}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../utils/axiosConfig.js'
 import './ListingDetails.css'
 
 const ListingDetails = ({ id }) => {
@@ -13,7 +13,7 @@ const ListingDetails = ({ id }) => {
         // Fetch listing details from the backend
         const fetchListing = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/listings/${id}`);
+                const response = await axiosInstance.get(`/listings/${id}`);
                 console.log(response.data);
                 setListing(response.data);
                 setLoading(false);

@@ -40,24 +40,23 @@ app.get("/api/listings", async (req, res) => {
 // Search listings based on query
 app.get("/api/listings/search", async (req, res) => {
   const { query } = req.query;
-  if (!query) {
-    return res.status(400).json({ error: "Query parameter is required" });
-  }
 
   try {
-    const filteredListings = await Property.find({
-      $or: [
-        { title: { $regex: query, $options: "i" } },
-        { desc: { $regex: query, $options: "i" } },
-      ],
-    });
-    if (filteredListings.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No listings found matching the query" });
+    let properties;
+    if (!query) {
+      properties = await Property.find();
+    } else {
+      properties = await Property.find({
+        $or: [
+          { title: { $regex: query, $options: "i" } },
+          { desc: { $regex: query, $options: "i" } },
+        ],
+      });
     }
-    res.json(filteredListings);
+
+    res.json(properties);
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ error: "Error fetching listings" });
   }
 });
