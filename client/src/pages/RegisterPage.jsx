@@ -5,7 +5,7 @@ import "./LoginPage.css";
 import { useUserContext } from '../context/UserContext';
 
 const RegisterPage = () => {
-    const { login } = useUserContext();
+    const { login, token, setToken } = useUserContext();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,9 +29,9 @@ const RegisterPage = () => {
 
             if (response.data.token) {
                 // Store token in localStorage or context as required
-                localStorage.setItem("token", response.data.token);
-                login({ username, email, userRole }); // Set the user context
-                navigate("/");  // Redirect to the home page after successful registration
+                setToken(response.data.token);
+                login({ email, userRole }); // Set the user context
+                userRole === "host" ? navigate("/dashboard") : navigate("/");
             } else {
                 setErrorMessage("Registration failed. Please try again.");
             }

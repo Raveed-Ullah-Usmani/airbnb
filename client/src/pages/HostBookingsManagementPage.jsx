@@ -11,7 +11,7 @@ const BookingsManagementPage = () => {
 
     const fetchBookings = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/api/admin/bookings');
+            const response = await axios.get('http://localhost:3000/api/host/bookings');
             const bookingsWithDetails = await Promise.all(response.data.map(async (booking) => {
                 try {
                     const propertyResponse = await axios.get(`http://localhost:3000/api/listings/${booking.propertyId}`);

@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import Booking from "./models/Booking.js";
 import Property from "./models/Property.js";
 import User from "./models/User.js";
-import { authenticateToken, authorizeRole } from './middleware/authMiddleware.js';
+import { authenticateToken, authorizeRole, authorizeHost } from './middleware/authMiddleware.js';
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -205,13 +205,14 @@ app.post("/api/auth/login", async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user || !(await user.matchPassword(password))) {
+      console.log('Invalid email or password');
       return res.status(400).json({ error: "Invalid email or password" });
     }
 
     const token = jwt.sign({ userId: user._id, role: user.role, userRole: user.userRole }, JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ token });
+    res.json({ token, userRole: user.userRole});
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: "Error logging in" });
@@ -225,7 +226,7 @@ app.get("/api/auth/role", authenticateToken, async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
-    res.json({ role: user.role });
+    res.json({ role: user.role, userRole: user.userRole });
   } catch (error) {
     console.error("Error fetching user role:", error);
     res.status(500).json({ error: "Server error." });
@@ -328,6 +329,123 @@ app.get("/api/admin/bookings", authenticateToken, authorizeRole('admin'), async 
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: "Error fetching bookings" });
+  }
+});
+
+//Host Routes
+
+// Host views all their listings
+app.get("/api/host/listings", authenticateToken, authorizeHost, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+    const listings = await Property.find({ ownerEmail: user.email });
+    res.json(listings);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Error fetching listings" });
+  }
+});
+
+
+
+// Host adds a new listing
+app.post('/api/host/listings', authenticateToken, authorizeHost, async (req, res) => {
+  const {
+    type,
+    rating,
+    desc,
+    imgSrc,
+    pricePerNight,
+    date,
+    title,
+    address,
+    agent,
+    contact,
+    amenities,
+    guests,
+    ownerEmail
+  } = req.body;
+  if (
+    !type ||
+    !rating ||
+    !desc ||
+    !imgSrc ||
+    !pricePerNight ||
+    !date ||
+    !title ||
+    !address ||
+    !agent ||
+    !contact ||
+    !amenities ||
+    !guests ||
+    !ownerEmail
+  ) {
+    console.log('All fields are required');
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  try {
+    const newListing = new Property({
+      type,
+      rating,
+      desc,
+      imgSrc,
+      pricePerNight,
+      date,
+      title,
+      address,
+      agent,
+      contact,
+      amenities,
+      guests,
+      ownerEmail
+    });
+    await newListing.save();
+    res.status(201).json({ message: "Listing added successfully", listing: newListing });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: "Error adding listing" });
+  }
+});
+
+// Host deletes a listing
+app.delete('/api/host/listings/:id', authenticateToken, authorizeHost, async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'Invalid listing ID' });
+  }
+
+  try {
+    // Fetch the user by ID to get the email
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Use the email to find and delete the listing
+    const listing = await Property.findOneAndDelete({ _id: id, ownerEmail: user.email });
+    if (!listing) {
+      return res.status(404).json({ error: 'Listing not found or not authorized' });
+    }
+    res.json({ message: 'Listing deleted successfully' });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: 'Error deleting listing' });
+  }
+});
+
+// Host views bookings for their listings
+app.get('/api/host/bookings', authenticateToken, authorizeHost, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+    const listings = await Property.find({ ownerEmail: user.email });
+    const listingIds = listings.map(listing => listing._id);
+    const bookings = await Booking.find({ propertyId: { $in: listingIds } });
+    res.json(bookings);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: 'Error fetching bookings' });
   }
 });
 

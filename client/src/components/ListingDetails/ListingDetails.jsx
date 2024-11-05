@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosConfig.js'
 import './ListingDetails.css'
+import { useUserContext } from '../../context/UserContext.jsx';
 
 const ListingDetails = ({ id }) => {
+    const { user } = useUserContext();
     const [listing, setListing] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -37,8 +39,9 @@ const ListingDetails = ({ id }) => {
 
     // Function to handle the "Book Now" button click
     const handleBookNow = () => {
-        navigate(`/booking/${id}`); // Navigate to the booking page (assuming the path is '/booking')
+        navigate(`/booking/${id}`);
     };
+
     return (
         <div className="listing-detail-page">
             <div className="listing-details-container">
@@ -57,9 +60,11 @@ const ListingDetails = ({ id }) => {
                     {/* <p><strong>Bathrooms:</strong> {listing.bathrooms}</p> */}
                     <p><strong>Price per night:</strong> ${listing.pricePerNight}</p>
 
-                    <button onClick={handleBookNow} className="book-now-btn">
-                        Book Now
-                    </button>
+                    {user.userRole !== 'host' && (
+                        <button onClick={handleBookNow} className="book-now-btn">
+                            Book Now
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

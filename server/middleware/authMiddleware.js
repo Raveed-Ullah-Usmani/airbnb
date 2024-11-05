@@ -18,7 +18,7 @@ export const authenticateToken = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    console.log('error occured inside authentication', error.message);
+    console.log("error occured inside authentication", error.message);
     res.status(400).json({ error: "Invalid token." });
   }
 };
@@ -28,7 +28,10 @@ export const authorizeRole = (role) => {
   return async (req, res, next) => {
     try {
       const user = await User.findById(req.user.userId);
-      if (!user) return res.status(404).json({ error: "User not found." });
+      if (!user) {
+        console.log("user not found");
+        return res.status(404).json({ error: "User not found." });
+      }
 
       if (user.role !== role)
         return res.status(403).json({ error: "Access denied." });
@@ -38,4 +41,18 @@ export const authorizeRole = (role) => {
       res.status(500).json({ error: "Server error." });
     }
   };
+};
+
+// Middleware to authorize host role
+export const authorizeHost = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.userId);
+    if (user.userRole !== 'host') {
+      return res.status(403).json({ error: 'Access denied. Host role required.' });
+    }
+    next();
+  } catch (error) {
+    console.log('Error occurred inside authorization:', error.message);
+    res.status(500).json({ error: 'Server error.' });
+  }
 };

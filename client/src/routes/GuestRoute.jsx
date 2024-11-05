@@ -1,9 +1,9 @@
-import { React, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
-import { useUserContext } from '../context/UserContext';
+import { useUserContext } from '../context/UserContext.jsx';
 import axiosInstance from '../utils/axiosConfig.js';
 
-const ProtectedRoute = () => {
+const GuestRoute = () => {
     const { token } = useUserContext();
     const [isAuthenticated, setIsAuthenticated] = useState(null);
 
@@ -11,7 +11,8 @@ const ProtectedRoute = () => {
         const fetchUserRole = async () => {
             try {
                 const response = await axiosInstance.get('/auth/role');
-                if (response.data.role === 'admin') {
+                console.log("Role: ", response.data.userRole);
+                if (response.data.userRole === 'guest') {
                     setIsAuthenticated(true);
                 } else {
                     setIsAuthenticated(false);
@@ -25,6 +26,7 @@ const ProtectedRoute = () => {
         if (token) {
             fetchUserRole();
         } else {
+            console.log('No token found');
             setIsAuthenticated(false);
         }
     }, [token]);
@@ -36,4 +38,4 @@ const ProtectedRoute = () => {
     return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 
-export default ProtectedRoute;
+export default GuestRoute;

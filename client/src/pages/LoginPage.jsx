@@ -25,12 +25,20 @@ const LoginPage = () => {
                 headers: { "Content-Type": "application/json" },
             });
 
+
             if (response.data.token) {
                 // Store token in localStorage or context as required
                 // localStorage.setItem("token", response.data.token);
-                await setToken(response.data.token);
-                login({ email }); // Set the user context
-                navigate("/");  // Redirect to the home page after successful login
+                // await setToken(response.data.token);
+                // const userRoleResponse = await axios.get("http://localhost:3000/api/auth/role", {
+                //     headers: { Authorization: `Bearer ${token}` },
+                // });
+                setToken(response.data.token);
+                console.log(token);
+                const userRole = response.data.userRole;
+                console.log(userRole);
+                login({ email, userRole }); // Set the user context
+                userRole === "guest" ? navigate("/") : navigate("/dashboard");
             } else {
                 setErrorMessage("Invalid email or password.");
             }

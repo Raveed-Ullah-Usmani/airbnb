@@ -12,11 +12,7 @@ const UserProfilePage = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get('/profile', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+                const response = await axios.get('/profile');
                 setProfile(response.data);
             } catch (error) {
                 console.error('Error fetching profile:', error);
@@ -25,11 +21,7 @@ const UserProfilePage = () => {
 
         const fetchBookings = async () => {
             try {
-                const response = await axios.get('/bookings', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+                const response = await axios.get('/bookings');
                 setBookings(response.data);
             } catch (error) {
                 console.error('Error fetching bookings:', error);
