@@ -49,6 +49,10 @@ const propertySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  ownerEmail: {
+    type: String,
+    default: 'raveed@email.com'
+  }
 });
 
 // Create a model for the schema

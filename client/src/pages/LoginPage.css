@@ -32,7 +32,8 @@ h2 {
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="form-group"] {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
@@ -40,6 +41,23 @@ input[type="password"] {
   border: 1px solid var(--grey);
   font-size: 14px;
   box-sizing: border-box;
+}
+
+radio-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.radio-group label {
+  margin-right: 10px;
+  font-size: 14px;
+  color: var(--dark-grey);
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 5px;
+  accent-color: var(--theme); /* Change the color of the radio button */
 }
 
 button {

@@ -5,7 +5,7 @@ import { useUserContext } from '../context/UserContext';
 import axios from '../utils/axiosConfig.js'
 
 const ListingsManagementPage = () => {
-    const { token } = useUserContext();
+    const { token, user } = useUserContext();
     const [listings, setListings] = useState([]);
     const [newListing, setNewListing] = useState({
         type: '',
@@ -19,7 +19,8 @@ const ListingsManagementPage = () => {
         agent: '',
         contact: '',
         amenities: [],
-        guests: ''
+        guests: '',
+        ownerEmail: user.email
     });
 
     const navigate = useNavigate();
@@ -65,7 +66,8 @@ const ListingsManagementPage = () => {
                 agent: '',
                 contact: '',
                 amenities: [],
-                guests: ''
+                guests: '',
+                ownerEmail: user.email
             });
         } catch (error) {
             console.error('Error adding listing:', error);

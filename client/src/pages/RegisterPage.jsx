@@ -9,6 +9,7 @@ const RegisterPage = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [userRole, setUserRole] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
@@ -16,20 +17,20 @@ const RegisterPage = () => {
         e.preventDefault();
 
         // Basic form validation
-        if (!username || !email || !password) {
+        if (!username || !email || !password || !userRole) {
             setErrorMessage("Please fill in all fields.");
             return;
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/api/auth/register", { username, email, password }, {
+            const response = await axios.post("http://localhost:3000/api/auth/register", { username, email, password, userRole }, {
                 headers: { "Content-Type": "application/json" },
             });
 
             if (response.data.token) {
                 // Store token in localStorage or context as required
                 localStorage.setItem("token", response.data.token);
-                login({ username, email }); // Set the user context
+                login({ username, email, userRole }); // Set the user context
                 navigate("/");  // Redirect to the home page after successful registration
             } else {
                 setErrorMessage("Registration failed. Please try again.");
@@ -70,6 +71,28 @@ const RegisterPage = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
                     />
+                </div>
+                <div className="radio-group">
+                    <label>
+                        <input
+                            type="radio"
+                            name="userRole"
+                            value="host"
+                            checked={userRole === "host"}
+                            onChange={(e) => setUserRole(e.target.value)}
+                        />
+                        Host
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="userRole"
+                            value="guest"
+                            checked={userRole === "guest"}
+                            onChange={(e) => setUserRole(e.target.value)}
+                        />
+                        Guest
+                    </label>
                 </div>
                 {errorMessage && <p className="error">{errorMessage}</p>}
                 <button type="submit">Register</button>

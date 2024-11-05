@@ -42,6 +42,22 @@ const UserProfilePage = () => {
         }
     }, [token]);
 
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const response = await axios.get('/profile', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setProfile(response.data);
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
+        };
+        fetchProfile();
+    }, []);
+
     return (
         <div className="user-profile-page">
             <NavBar />

@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
+  userRole:{
+    type: String,
+    enum: ['host', 'guest'],
+    required: true,
+  },
   profilePictureUrl: {
     type: String,
     default: '',

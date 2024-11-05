@@ -159,10 +159,18 @@ app.get('/api/profile', authenticateToken, async (req, res) => {
 
 // Register a new user
 app.post("/api/auth/register", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, userRole } = req.body;
 
-  if (!username || !email || !password) {
-    return res.status(400).json({ error: "Username, email, and password are required" });
+  if (!username || !email || !password || !userRole) {
+    if (!username) console.log('Username is required');
+    if (!email) console.log('Email is required');
+    if (!password) console.log('Password is required');
+    if (!role) console.log('User Role is required');
+    return res.status(400).json({ error: "Username, email, password, and role are required" });
+  }
+
+  if (!['host', 'guest'].includes(userRole)) {
+    return res.status(400).json({ error: "Invalid role" });
   }
 
   try {
@@ -171,11 +179,11 @@ app.post("/api/auth/register", async (req, res) => {
       return res.status(400).json({ error: "Email already exists" });
     }
 
-    const newUser = new User({ username, email, password });
+    const newUser = new User({ username, email, password, userRole });
     await newUser.save();
 
     // Generate JWT token
-    const token = jwt.sign({ userId: newUser._id, role: newUser.role }, JWT_SECRET, {
+    const token = jwt.sign({ userId: newUser._id, role: newUser.role, userRole: newUser.userRole }, JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -200,7 +208,7 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(400).json({ error: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id, role: user.role, userRole: user.userRole }, JWT_SECRET, {
       expiresIn: "1h",
     });
     res.json({ token });
@@ -250,7 +258,8 @@ app.post("/api/admin/listings", authenticateToken, authorizeRole('admin'), async
     agent,
     contact,
     amenities,
-    guests
+    guests,
+    ownerEmail
   } = req.body;
   if (
     !type ||
@@ -264,8 +273,10 @@ app.post("/api/admin/listings", authenticateToken, authorizeRole('admin'), async
     !agent ||
     !contact ||
     !amenities ||
-    !guests
+    !guests ||
+    !ownerEmail
   ) {
+    console.log('All fields are required');
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -282,7 +293,8 @@ app.post("/api/admin/listings", authenticateToken, authorizeRole('admin'), async
       agent,
       contact,
       amenities,
-      guests
+      guests,
+      ownerEmail
     });
     await newListing.save();
     res.status(201).json({ message: "Listing added successfully", listing: newListing });

@@ -22,6 +22,7 @@ const list2 = [
     contact: "555-1234-5678",
     amenities: ["3 Bedrooms", "2 Bathrooms", "Backyard", "Garage", "Swimming Pool"],
     guests: "6",
+    ownerEmail: "raveed@email.com"
   },
   {
     type: "Apartment",
@@ -40,6 +41,7 @@ const list2 = [
     contact: "555-9876-5432",
     amenities: ["2 Bedrooms", "2.5 Bathrooms", "Balcony", "High-End Kitchen", "Gym Access"],
     guests: "4",
+    ownerEmail: "raveed@email.com"
   },
   {
     type: "Cottage",
@@ -58,6 +60,7 @@ const list2 = [
     contact: "555-2345-6789",
     amenities: ["2 Bedrooms", "1 Bathroom", "Garden", "Fireplace"],
     guests: "4",
+    ownerEmail: "raveed@email.com"
   },
   {
     type: "Townhouse",
@@ -76,6 +79,7 @@ const list2 = [
     contact: "555-8765-4321",
     amenities: ["3 Bedrooms", "2 Bathrooms", "2-Car Garage", "Modern Kitchen"],
     guests: "6",
+    ownerEmail: "raveed@email.com"
   },
 ];
 
